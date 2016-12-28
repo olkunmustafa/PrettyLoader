@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="PairPrettyLoaderView">
+        <attr name="ppl_radius" format="dimension" />
+        <attr name="ppl_strokeWidth" format="dimension" />
+        <attr name="ppl_circleColorOne" format="color" />
+        <attr name="ppl_circleColorTwo" format="color" />
+    </declare-styleable>
+
+</resources>
