@@ -4,6 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.text.DecimalFormat;
+
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 
@@ -14,6 +16,8 @@ import static org.junit.Assert.*;
  */
 @RunWith( JUnitParamsRunner.class )
 public class PairPrettyLoaderCalTest {
+
+    private static final double DELTA = 1e-15;
 
     private PairPrettyLoaderCal mPairPrettyLoaderCal;
 
@@ -33,11 +37,29 @@ public class PairPrettyLoaderCalTest {
     }
 
     @Test
-    @Parameters( { "10, 1, 84", "5, 2, 48" } )
+    @Parameters( { "10, 1, 63", "5, 2, 36", "10, 0, 60" } )
     public void pplDesiredWidthTest( int radius, int stroke, int expected ) throws Exception {
 
         int actual = this.mPairPrettyLoaderCal.pplDesiredWidth( radius, stroke );
         assertEquals( expected, actual );
 
+    }
+
+    @Test
+    @Parameters( { "10, 18", "1000, 1800", "1250, 2250" } )
+    public void pplDesiredDurationTest( int t, int expected ) throws Exception {
+
+        float actual = this.mPairPrettyLoaderCal.pplDesiredDuration( t );
+        assertEquals( expected, actual, DELTA );
+
+    }
+
+    @Test
+    public void pplCircleLifeTest() throws Exception {
+
+        float get = this.mPairPrettyLoaderCal.pplCircleLife( 1000 );
+        double actual = this.mPairPrettyLoaderCal.round( get, 2 );
+
+        assertEquals( 0.56, actual, DELTA );
     }
 }

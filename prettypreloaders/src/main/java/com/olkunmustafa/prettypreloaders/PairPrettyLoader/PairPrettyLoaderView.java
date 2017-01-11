@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
+import android.view.animation.Animation;
 
 import com.olkunmustafa.prettypreloaders.BasePrettyLoaderView;
 import com.olkunmustafa.prettypreloaders.R;
@@ -29,9 +30,13 @@ public class PairPrettyLoaderView extends BasePrettyLoaderView {
     private int circleColorTwo;
 
     private Paint mCirclePaintOne = new Paint();
-    private Paint mCirclePaintTwo;
+    private Paint mCirclePaintTwo = new Paint();
+
+    private float circleOnePosition;
+    private float circleTwoPosition;
 
     private PairPrettyLoaderCal mPairPrettyLoaderCal;
+    private PPLAnimation pplAnimation;
 
     public PairPrettyLoaderView( Context context ) {
         this( context, null, 0 );
@@ -80,7 +85,8 @@ public class PairPrettyLoaderView extends BasePrettyLoaderView {
         this.mCirclePaintOne.setStyle( Paint.Style.FILL );
         this.mCirclePaintOne.setAntiAlias( true );
 
-        this.mCirclePaintTwo = this.mCirclePaintOne;
+        this.mCirclePaintTwo.setStyle( Paint.Style.FILL );
+        this.mCirclePaintTwo.setAntiAlias( true );
 
     }
 
@@ -95,6 +101,13 @@ public class PairPrettyLoaderView extends BasePrettyLoaderView {
         this.radiusPx = ( int ) typedArray.getDimension( R.styleable.PairPrettyLoaderView_ppl_radius, DensityUtils.dpToPx( DEFAULT_RADIUS_DP ) );
         this.strokePx = ( int ) typedArray.getDimension( R.styleable.PairPrettyLoaderView_ppl_strokeWidth, DensityUtils.dpToPx( DEFAULT_STROKE_DP ) );
 
+        this.circleOnePosition = radiusPx;
+        this.circleTwoPosition = radiusPx * 3;
+
+        this.pplAnimation = new PPLAnimation( this, circleOnePosition, circleTwoPosition, 1000 );
+        this.pplAnimation.setRepeatCount( Animation.INFINITE );
+
+        this.startAnimation( pplAnimation );
     }
 
     /**
@@ -165,14 +178,57 @@ public class PairPrettyLoaderView extends BasePrettyLoaderView {
     protected void onDraw( Canvas canvas ) {
         super.onDraw( canvas );
 
-        this.mCirclePaintOne.setColor( Color.BLACK );
+        canvas.drawCircle( this.circleOnePosition, radiusPx, radiusPx, mCirclePaintOne );
+        canvas.drawCircle( this.circleTwoPosition, radiusPx, radiusPx, mCirclePaintTwo );
 
-        this.mCirclePaintOne.setAlpha( 128 );
-        canvas.drawCircle( radiusPx, radiusPx, radiusPx, mCirclePaintOne );
-
-        this.mCirclePaintOne.setAlpha( 255 );
-        canvas.drawCircle( ( ( radiusPx * 2 ) * 2 ) + radiusPx, radiusPx, radiusPx, mCirclePaintOne );
     }
+
+    /**
+     * Sets the position of CircleOne
+     *
+     * @param position Position value
+     * @since 0.1.0
+     */
+    public void setCircleOnePosition( float position ) {
+
+        this.circleOnePosition = position;
+        invalidate();
+    }
+
+    /**
+     * Sets the position of CircleOne
+     *
+     * @since 0.1.0
+     */
+    public void setCircleAlpha( int alpha ) {
+
+        mCirclePaintOne.setAlpha( alpha );
+        invalidate();
+    }
+
+    /**
+     * Sets the position of CircleOne
+     *
+     * @param position Position value
+     * @since 0.1.0
+     */
+    public void setCircleTwoPosition( float position ) {
+
+        this.circleTwoPosition = position;
+        invalidate();
+    }
+
+    /**
+     * Sets the position of CircleOne
+     *
+     * @since 0.1.0
+     */
+    public void setCircleTwoAlpha( int alpha ) {
+
+        this.mCirclePaintTwo.setAlpha( alpha );
+        invalidate();
+    }
+
 
     public void setColorOne( int circleColorOne ) {
         this.circleColorOne = circleColorOne;
