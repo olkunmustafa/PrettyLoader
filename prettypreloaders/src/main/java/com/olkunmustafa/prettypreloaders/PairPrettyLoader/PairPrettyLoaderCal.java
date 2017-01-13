@@ -11,7 +11,7 @@ import java.math.RoundingMode;
  */
 class PairPrettyLoaderCal {
 
-    public static final double ANIMATION_PART = 0.2;
+    public double animationPart;
 
     /**
      * @param radiusPx Radius dimension for each circle
@@ -36,34 +36,50 @@ class PairPrettyLoaderCal {
 
         int circleDiameterPx = radiusPx * 2;
         int totalCircleWidth = ( circleDiameterPx + strokePx );
-        return totalCircleWidth * 3;
+        return totalCircleWidth * 4;
 
     }
 
     /**
      * @param t Duration for each ball animation
-     * @return Desired total duration for whole animation
+     * @return Desired total duration for whole animation.
      * @since 0.1.0
      */
     float pplDesiredDuration( float t ) {
-        return ( float ) ( ( t * 2 ) - ( ANIMATION_PART * t ) );
+        return ( float ) ( ( t * 2 ) - ( this.getAnimationPart() * t ) );
 
     }
 
-    float pplCircleFinalPosition( float start, float end, float interpolatedTime ) {
+    float pplCircleCurrentPosition( float start, float end, float interpolatedTime ) {
         return ( start + ( ( end - start ) * pplDesiredDuration( interpolatedTime ) ) );
 
     }
 
-    public float pplCircleLife( float i ) {
+    float pplCircleLife( float i ) {
         return i / pplDesiredDuration( i );
+
     }
 
-    public double round( double value, int places ) {
+    float pplCircleStartPosition( float start, float end ) {
+        return ( float ) ( end - ( ( end - start ) * this.getAnimationPart() ) );
+    }
+
+    double round( double value, int places ) {
         if ( places < 0 ) throw new IllegalArgumentException();
 
         BigDecimal bd = new BigDecimal( value );
         bd = bd.setScale( places, RoundingMode.HALF_UP );
         return bd.doubleValue();
+    }
+
+    double getAnimationPart() {
+        if ( this.animationPart == 0 )
+            return this.animationPart = 0.3;
+
+        return this.animationPart;
+    }
+
+    void setAnimationPart( double animationPart ) {
+        this.animationPart = animationPart;
     }
 }

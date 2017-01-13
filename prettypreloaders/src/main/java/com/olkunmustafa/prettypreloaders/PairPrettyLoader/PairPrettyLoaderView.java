@@ -3,7 +3,6 @@ package com.olkunmustafa.prettypreloaders.PairPrettyLoader;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -14,13 +13,9 @@ import com.olkunmustafa.prettypreloaders.BasePrettyLoaderView;
 import com.olkunmustafa.prettypreloaders.R;
 import com.olkunmustafa.prettypreloaders.utils.DensityUtils;
 
-/**
- * Created by olkunmustafa on 28/12/2016.
- */
-
 public class PairPrettyLoaderView extends BasePrettyLoaderView {
 
-    private static final int DEFAULT_RADIUS_DP = 6;
+    private static final int DEFAULT_RADIUS_DP = 20;
     private static final int DEFAULT_STROKE_DP = 0;
 
     private int radiusPx;
@@ -101,13 +96,15 @@ public class PairPrettyLoaderView extends BasePrettyLoaderView {
         this.radiusPx = ( int ) typedArray.getDimension( R.styleable.PairPrettyLoaderView_ppl_radius, DensityUtils.dpToPx( DEFAULT_RADIUS_DP ) );
         this.strokePx = ( int ) typedArray.getDimension( R.styleable.PairPrettyLoaderView_ppl_strokeWidth, DensityUtils.dpToPx( DEFAULT_STROKE_DP ) );
 
-        this.circleOnePosition = radiusPx;
+        this.mPairPrettyLoaderCal.setAnimationPart( 1 );
+        this.circleOnePosition = this.mPairPrettyLoaderCal.pplCircleStartPosition( radiusPx, radiusPx * 3 );
         this.circleTwoPosition = radiusPx * 3;
 
         this.pplAnimation = new PPLAnimation( this, circleOnePosition, circleTwoPosition, 1000 );
         this.pplAnimation.setRepeatCount( Animation.INFINITE );
 
-        this.startAnimation( pplAnimation );
+//        this.startAnimation( pplAnimation );
+
     }
 
     /**
@@ -228,7 +225,6 @@ public class PairPrettyLoaderView extends BasePrettyLoaderView {
         this.mCirclePaintTwo.setAlpha( alpha );
         invalidate();
     }
-
 
     public void setColorOne( int circleColorOne ) {
         this.circleColorOne = circleColorOne;

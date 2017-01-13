@@ -37,7 +37,7 @@ public class PairPrettyLoaderCalTest {
     }
 
     @Test
-    @Parameters( { "10, 1, 63", "5, 2, 36", "10, 0, 60" } )
+    @Parameters( { "10, 1, 84", "5, 2, 48", "10, 0, 80" } )
     public void pplDesiredWidthTest( int radius, int stroke, int expected ) throws Exception {
 
         int actual = this.mPairPrettyLoaderCal.pplDesiredWidth( radius, stroke );
@@ -49,6 +49,7 @@ public class PairPrettyLoaderCalTest {
     @Parameters( { "10, 18", "1000, 1800", "1250, 2250" } )
     public void pplDesiredDurationTest( int t, int expected ) throws Exception {
 
+        this.mPairPrettyLoaderCal.setAnimationPart( 0.2 );
         float actual = this.mPairPrettyLoaderCal.pplDesiredDuration( t );
         assertEquals( expected, actual, DELTA );
 
@@ -57,9 +58,20 @@ public class PairPrettyLoaderCalTest {
     @Test
     public void pplCircleLifeTest() throws Exception {
 
+        this.mPairPrettyLoaderCal.setAnimationPart( 0.4 );
         float get = this.mPairPrettyLoaderCal.pplCircleLife( 1000 );
         double actual = this.mPairPrettyLoaderCal.round( get, 2 );
 
-        assertEquals( 0.56, actual, DELTA );
+        assertEquals( 0.63, actual, DELTA );
+    }
+
+    @Test
+    @Parameters( { "1, 10, 0.5, 0.6" } )
+    public void pplCircleStartPositionTest( int start, int end, double percentage, double expected ) throws Exception {
+
+        this.mPairPrettyLoaderCal.setAnimationPart( percentage );
+        float actual = this.mPairPrettyLoaderCal.pplCircleStartPosition( start, end );
+        assertEquals( expected, actual, DELTA );
+
     }
 }
