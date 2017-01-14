@@ -67,6 +67,8 @@ public class PairPrettyLoaderView extends BasePrettyLoaderView {
         this.initPaint();
         this.initSizeAttribute( typedArray );
         this.initColorAttribute( context, typedArray );
+        this.circleStartSettings();
+        this.circleSetAnimation();
 
         typedArray.recycle();
 
@@ -96,15 +98,6 @@ public class PairPrettyLoaderView extends BasePrettyLoaderView {
         this.radiusPx = ( int ) typedArray.getDimension( R.styleable.PairPrettyLoaderView_ppl_radius, DensityUtils.dpToPx( DEFAULT_RADIUS_DP ) );
         this.strokePx = ( int ) typedArray.getDimension( R.styleable.PairPrettyLoaderView_ppl_strokeWidth, DensityUtils.dpToPx( DEFAULT_STROKE_DP ) );
 
-        this.mPairPrettyLoaderCal.setAnimationPart( 1 );
-        this.circleOnePosition = this.mPairPrettyLoaderCal.pplCircleStartPosition( radiusPx, radiusPx * 3 );
-        this.circleTwoPosition = radiusPx * 3;
-
-        this.pplAnimation = new PPLAnimation( this, circleOnePosition, circleTwoPosition, 1000 );
-        this.pplAnimation.setRepeatCount( Animation.INFINITE );
-
-//        this.startAnimation( pplAnimation );
-
     }
 
     /**
@@ -122,6 +115,31 @@ public class PairPrettyLoaderView extends BasePrettyLoaderView {
         this.mCirclePaintOne.setColor( this.circleColorOne );
         this.mCirclePaintTwo.setColor( this.circleColorTwo );
 
+    }
+
+    /**
+     * Arranges the circles distance when the loader appears
+     *
+     * @since 0.1.0
+     */
+    private void circleStartSettings() {
+
+        this.circleOnePosition = this.mPairPrettyLoaderCal.pplCircleOneStartPosition( radiusPx );
+        this.mCirclePaintOne.setAlpha( 255 / 2 );
+
+        this.circleTwoPosition = this.mPairPrettyLoaderCal.pplCircleTwoStartPosition( radiusPx );
+
+    }
+
+    /**
+     *
+     */
+    private void circleSetAnimation() {
+
+        this.pplAnimation = new PPLAnimation( this, radiusPx );
+        this.pplAnimation.setRepeatCount( Animation.INFINITE );
+
+        this.startAnimation( pplAnimation );
     }
 
     @Override

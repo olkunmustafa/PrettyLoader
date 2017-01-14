@@ -4,8 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.text.DecimalFormat;
-
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 
@@ -37,7 +35,7 @@ public class PairPrettyLoaderCalTest {
     }
 
     @Test
-    @Parameters( { "10, 1, 84", "5, 2, 48", "10, 0, 80" } )
+    @Parameters( { "10, 1, 63", "5, 0, 30" } )
     public void pplDesiredWidthTest( int radius, int stroke, int expected ) throws Exception {
 
         int actual = this.mPairPrettyLoaderCal.pplDesiredWidth( radius, stroke );
@@ -46,32 +44,40 @@ public class PairPrettyLoaderCalTest {
     }
 
     @Test
-    @Parameters( { "10, 18", "1000, 1800", "1250, 2250" } )
-    public void pplDesiredDurationTest( int t, int expected ) throws Exception {
+    @Parameters( { "10, 15", "5, 7.5", "0.25, 0" } )
+    public void pplDesiredDurationTest( float t, double expected ) throws Exception {
 
-        this.mPairPrettyLoaderCal.setAnimationPart( 0.2 );
         float actual = this.mPairPrettyLoaderCal.pplDesiredDuration( t );
         assertEquals( expected, actual, DELTA );
 
     }
-
     @Test
-    public void pplCircleLifeTest() throws Exception {
+    @Parameters( { "10, 20", "5, 10" } )
+    public void pplCircleStartPositionTest( int start, double expected ) throws Exception {
 
-        this.mPairPrettyLoaderCal.setAnimationPart( 0.4 );
-        float get = this.mPairPrettyLoaderCal.pplCircleLife( 1000 );
-        double actual = this.mPairPrettyLoaderCal.round( get, 2 );
+        double actual = this.mPairPrettyLoaderCal.pplCircleOneStartPosition( start );
+        assertEquals( expected, actual, DELTA );
 
-        assertEquals( 0.63, actual, DELTA );
     }
 
     @Test
-    @Parameters( { "1, 10, 0.5, 0.6" } )
-    public void pplCircleStartPositionTest( int start, int end, double percentage, double expected ) throws Exception {
+    @Parameters( { "5, 0.50, 15", "5, 1, 20" } )
+    public void pplCircleFirstPartCurrentPositionTest( float radius, float time, float expected ) throws Exception {
 
-        this.mPairPrettyLoaderCal.setAnimationPart( percentage );
-        float actual = this.mPairPrettyLoaderCal.pplCircleStartPosition( start, end );
+        double actual = this.mPairPrettyLoaderCal.pplCircleFirstPartCurrentPosition( radius, time );
         assertEquals( expected, actual, DELTA );
+
+
+    }
+
+
+    @Test
+    @Parameters( { "5, 1, 10", "5, 0.5, 5" } )
+    public void pplCircleSecondPartCurrentPositionTest( float radius, float time, float expected ) throws Exception {
+
+        double actual = this.mPairPrettyLoaderCal.pplCircleSecondPartCurrentPosition( radius, time );
+        assertEquals( expected, actual, DELTA );
+
 
     }
 }

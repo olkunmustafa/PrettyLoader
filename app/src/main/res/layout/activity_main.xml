@@ -15,7 +15,7 @@
     <com.olkunmustafa.prettypreloaders.PairPrettyLoader.PairPrettyLoaderView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:ppl_radius="20dp"
+        app:ppl_radius="30dp"
         />
 
 </RelativeLayout>

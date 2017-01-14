@@ -36,7 +36,7 @@ class PairPrettyLoaderCal {
 
         int circleDiameterPx = radiusPx * 2;
         int totalCircleWidth = ( circleDiameterPx + strokePx );
-        return totalCircleWidth * 4;
+        return radiusPx * 6;
 
     }
 
@@ -46,40 +46,62 @@ class PairPrettyLoaderCal {
      * @since 0.1.0
      */
     float pplDesiredDuration( float t ) {
-        return ( float ) ( ( t * 2 ) - ( this.getAnimationPart() * t ) );
+        return ( t * 2 ) - ( t / 2 );
 
     }
 
-    float pplCircleCurrentPosition( float start, float end, float interpolatedTime ) {
-        return ( start + ( ( end - start ) * pplDesiredDuration( interpolatedTime ) ) );
+    float pplCircleOneStartPosition( float radius ) {
+        float end = ( radius * 3 );
+        return ( end - radius );
 
     }
 
-    float pplCircleLife( float i ) {
-        return i / pplDesiredDuration( i );
+    float pplCircleTwoStartPosition( float radius ) {
+        return radius * 3;
 
     }
 
-    float pplCircleStartPosition( float start, float end ) {
-        return ( float ) ( end - ( ( end - start ) * this.getAnimationPart() ) );
+    /**
+     * @param radius Radius of circle
+     * @param time   Time
+     * @return The current position of the circle in accurate time.
+     * @since 0.1.0
+     */
+    float pplCircleFirstPartCurrentPosition( float radius, float time ) {
+
+        float start = radius * 2;
+        float end = radius * 3;
+
+        return ( ( start + ( ( end - radius ) * time ) ) );
     }
 
-    double round( double value, int places ) {
-        if ( places < 0 ) throw new IllegalArgumentException();
 
-        BigDecimal bd = new BigDecimal( value );
-        bd = bd.setScale( places, RoundingMode.HALF_UP );
-        return bd.doubleValue();
+    /**
+     * @param radius Radius of circle
+     * @param time   Time
+     * @return The current position of the circle in accurate time.
+     * @since 0.1.0
+     */
+    float pplCircleSecondPartCurrentPosition( float radius, float time ) {
+
+        float start = radius;
+        float end = radius * 3;
+
+        return ( float ) (start + ( ( end - radius ) * ( time - 0.5 ) ));
     }
 
-    double getAnimationPart() {
-        if ( this.animationPart == 0 )
-            return this.animationPart = 0.3;
+    /**
+     * @param radius Radius of circle
+     * @param time   Time
+     * @return The current position of the circle in accurate time.
+     * @since 0.1.0
+     */
+    float pplCircleThirdPartCurrentPosition( float radius, float time ) {
 
-        return this.animationPart;
+        float start = radius * 3;
+        float end = radius * 5;
+
+        return ( float ) (start + ( ( end - start ) * time ));
     }
 
-    void setAnimationPart( double animationPart ) {
-        this.animationPart = animationPart;
-    }
 }
