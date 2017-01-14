@@ -11,7 +11,6 @@ import java.math.RoundingMode;
  */
 class PairPrettyLoaderCal {
 
-    public double animationPart;
 
     /**
      * @param radiusPx Radius dimension for each circle
@@ -36,17 +35,7 @@ class PairPrettyLoaderCal {
 
         int circleDiameterPx = radiusPx * 2;
         int totalCircleWidth = ( circleDiameterPx + strokePx );
-        return radiusPx * 6;
-
-    }
-
-    /**
-     * @param t Duration for each ball animation
-     * @return Desired total duration for whole animation.
-     * @since 0.1.0
-     */
-    float pplDesiredDuration( float t ) {
-        return ( t * 2 ) - ( t / 2 );
+        return totalCircleWidth * 3;
 
     }
 
@@ -87,7 +76,7 @@ class PairPrettyLoaderCal {
         float start = radius;
         float end = radius * 3;
 
-        return ( float ) (start + ( ( end - radius ) * ( time - 0.5 ) ));
+        return ( float ) ( start + ( ( end - radius ) * ( time - 0.5 ) ) );
     }
 
     /**
@@ -101,7 +90,34 @@ class PairPrettyLoaderCal {
         float start = radius * 3;
         float end = radius * 5;
 
-        return ( float ) (start + ( ( end - start ) * time ));
+        return ( float ) ( start + ( ( end - start ) * time ) );
+    }
+
+    /**
+     * @return Current alpha value for first of during process
+     * @since 0.1.0
+     */
+    int pplCircleFirstPartAlpha( float t ) {
+        return ( int ) ( ( 255 / 2 ) - ( t * 255 ) );
+
+    }
+
+    /**
+     * @return Current alpha value for second of during process
+     * @since 0.1.0
+     */
+    int pplCircleSecondPartAlpha( float t ) {
+        return ( int ) ( 255 - ( ( t - 0.5 ) * 255 ) );
+
+    }
+
+    /**
+     * @return Current alpha value for second of during process
+     * @since 0.1.0
+     */
+    int pplCircleThirdPartAlpha( float t ) {
+        return ( int ) (255 - ( t * 255 ));
+
     }
 
 }

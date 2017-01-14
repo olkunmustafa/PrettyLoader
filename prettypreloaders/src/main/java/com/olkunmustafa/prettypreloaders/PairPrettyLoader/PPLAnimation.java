@@ -35,30 +35,29 @@ class PPLAnimation extends Animation {
 
     }
 
-
     private void circleOneAnimation( float t ) {
         float currentPosition = 0;
-        float currentAlpha = 0;
+        int currentAlpha = 0;
 
         if ( t <= 0.5 ) {
             currentPosition = this.mPairPrettyLoaderCal.pplCircleFirstPartCurrentPosition( this.mRadius, t );
-            currentAlpha = ( int ) ( ( 255 / 2 ) - ( t * 255 ) );
+            currentAlpha = this.mPairPrettyLoaderCal.pplCircleFirstPartAlpha( t );
         }
 
         if ( t >= 0.5 ) {
             currentPosition = this.mPairPrettyLoaderCal.pplCircleSecondPartCurrentPosition( this.mRadius, t );
-            currentAlpha = ( int ) ( 255 - (  ( t - 0.5 ) * 255 ) );
+            currentAlpha = this.mPairPrettyLoaderCal.pplCircleSecondPartAlpha( t );
         }
 
         this.mPPLView.setCircleOnePosition( currentPosition );
-        this.mPPLView.setCircleAlpha( ( int ) currentAlpha );
+        this.mPPLView.setCircleAlpha( currentAlpha );
 
     }
 
     private void circleTwoAnimation( float t ) {
 
         float currentPosition = this.mPairPrettyLoaderCal.pplCircleThirdPartCurrentPosition( this.mRadius, t );
-        int currentAlpha = ( int ) ( 255 - ( t * 255 ) );
+        int currentAlpha = this.mPairPrettyLoaderCal.pplCircleThirdPartAlpha( t );
 
         this.mPPLView.setCircleTwoPosition( currentPosition );
         this.mPPLView.setCircleTwoAlpha( currentAlpha );

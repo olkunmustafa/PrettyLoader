@@ -44,14 +44,6 @@ public class PairPrettyLoaderCalTest {
     }
 
     @Test
-    @Parameters( { "10, 15", "5, 7.5", "0.25, 0" } )
-    public void pplDesiredDurationTest( float t, double expected ) throws Exception {
-
-        float actual = this.mPairPrettyLoaderCal.pplDesiredDuration( t );
-        assertEquals( expected, actual, DELTA );
-
-    }
-    @Test
     @Parameters( { "10, 20", "5, 10" } )
     public void pplCircleStartPositionTest( int start, double expected ) throws Exception {
 
@@ -78,6 +70,21 @@ public class PairPrettyLoaderCalTest {
         double actual = this.mPairPrettyLoaderCal.pplCircleSecondPartCurrentPosition( radius, time );
         assertEquals( expected, actual, DELTA );
 
+    }
 
+    @Test
+    @Parameters({ "0.5, 0" })
+    public void pplCircleFirstPartAlphaTest( float time, int expected ) throws Exception {
+        double actual = this.mPairPrettyLoaderCal.pplCircleFirstPartAlpha( time );
+
+        assertEquals( expected , actual, DELTA );
+    }
+
+    @Test
+    @Parameters({ "0.5, 255.0", "0.6, 229.0" })
+    public void pplCircleSecondPartAlphaTest( float time, double expected ) throws Exception {
+        double actual = this.mPairPrettyLoaderCal.pplCircleSecondPartAlpha( time );
+
+        assertEquals( expected , actual, DELTA );
     }
 }
